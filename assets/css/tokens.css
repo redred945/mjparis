@@ -1,0 +1,313 @@
+/* ==========================================================================
+   MJ PARIS - Design tokens - DA v2 "Place Vendôme"
+   Noir / or / ivoire dérivés du logo (monogramme MJ ivoire + couronne dorée sur noir)
+   et du site actuel du client (#0c0b0a, #f4efe6, or #c5a059 / #e6c280).
+   Documentation : docs/design-direction.md (table ancien -> nouveau au §2.4).
+
+   Fonts à charger dans le <head> (preconnect fonts.googleapis.com + fonts.gstatic.com crossorigin, puis ce lien) :
+   https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..500&family=Manrope:wght@400..700&display=swap
+
+   Mobile-first. Page claire par défaut ; .theme-dark = contexte noir ;
+   .theme-dark-md = noir seulement à partir de 768px (clair sur mobile, leçon KST).
+   ========================================================================== */
+
+:root {
+  /* ---------- Palette brute (v2) ---------- */
+  /* Noirs (fond du logo = noir pur ; le site utilise #0c0b0a, plus chaud) */
+  --noir-950: #0A0908;   /* splash, bas de footer */
+  --noir-900: #0C0B0A;   /* noir de la maison : fond sombre principal */
+  --noir-800: #161513;   /* surfaces sur noir */
+  --noir-700: #22201D;   /* surface surélevée, champs sur noir */
+  --noir-600: #34312C;   /* filets forts sur noir */
+
+  /* Ivoires (lettres du logo #F5F3ED ; texte du site #F4EFE6) */
+  --ivoire-50:  #FBF8F2; /* surface / cartes sur clair */
+  --ivoire-100: #F4EFE6; /* fond clair principal ET texte sur noir */
+  --ivoire-200: #EBE4D6; /* fond clair alterné, champs */
+  --ivoire-300: #D9D0BD; /* filets sur clair (décoratifs) */
+
+  /* Sables (gris chauds de texte) */
+  --sable-300: #BDB6A8;  /* texte secondaire sur noir (9.8:1) */
+  --sable-400: #8C8472;  /* texte tertiaire sur noir seulement (5.3:1), bordures de champs sur noir */
+  --sable-600: #7C735F;  /* bordure de champ sur clair (4.1:1, >= 3:1 composants UI) */
+  --sable-700: #5B554A;  /* texte secondaire sur clair (6.5:1) */
+
+  /* Ors (couronne du logo #BDAA7D ; or du site #C5A059 / #E6C280 / #B89B66) */
+  --or-300: #E6C280;     /* or clair : texte/accents sur noir (11.6:1), reflet */
+  --or-500: #C5A059;     /* or principal : fond de CTA, couronne, filets sur noir (8:1) */
+  --or-logo: #BDAA7D;    /* or échantillonné de la couronne du logo (docs/logo.md), champagne désaturé */
+  --or-600: #9A7B35;     /* or sur clair, décoratif seulement (3.5:1, JAMAIS en texte) */
+  --or-800: #7A5C1E;     /* or "encre" : texte/liens sur clair (5.4:1 sur ivoire-100) */
+  --or-900: #5E4513;     /* hover de l'or encre sur clair */
+
+  --danger-on-light: #A3281E;  /* 6.4:1 sur ivoire-100 */
+  --danger-on-dark:  #E38B7C;  /* 7.7:1 sur noir-900 */
+
+  --gold-grad: linear-gradient(110deg, #B89B66 0%, #E6C280 38%, #F3DFAF 52%, #C5A059 70%, #B89B66 100%);
+
+  /* ---------- Alias de compatibilité v1 -> v2 (ne pas utiliser dans du nouveau code) ---------- */
+  --ivory-50:  var(--ivoire-50);
+  --ivory-100: var(--ivoire-100);
+  --ivory-200: var(--ivoire-200);
+  --stone-300: var(--ivoire-300);
+  --stone-500: var(--sable-400);
+  --stone-700: var(--sable-700);
+  --lacquer-900: var(--noir-900);
+  --lacquer-800: var(--noir-800);
+  --lacquer-700: var(--noir-700);
+  --bordeaux-700: var(--or-800);   /* accent sur clair : devient or encre */
+  --bordeaux-600: var(--or-900);
+  --bordeaux-300: var(--or-300);   /* accent sur sombre : devient or clair */
+
+  /* ---------- Couleurs sémantiques (contexte CLAIR par défaut) ---------- */
+  --color-bg: var(--ivoire-100);
+  --color-bg-alt: var(--ivoire-200);
+  --color-surface: var(--ivoire-50);
+  --color-surface-sunk: var(--ivoire-200);
+  --color-text: var(--noir-900);
+  --color-text-muted: var(--sable-700);
+  --color-line: var(--ivoire-300);
+  --color-line-strong: var(--or-600);        /* filet doré décoratif sur clair */
+  --color-accent: var(--or-800);             /* texte/liens/labels sur clair */
+  --color-accent-hover: var(--or-900);
+  --color-on-accent: var(--ivoire-100);
+  --color-ornament: var(--or-600);           /* couronne, losanges, numéros décoratifs sur clair */
+
+  /* CTA principal : or plein + texte noir, identique en clair et sombre (8:1) */
+  --color-cta-bg: var(--or-500);
+  --color-cta-bg-hover: var(--or-300);
+  --color-cta-text: var(--noir-900);
+
+  /* Champs de formulaire */
+  --color-field-bg: var(--ivoire-50);
+  --color-field-border: var(--sable-600);
+  --color-field-border-focus: var(--or-800);
+  --color-danger: var(--danger-on-light);
+
+  /* Contexte sombre (hero, flotte desktop, footer) : appliquer .theme-dark */
+  --color-dark-bg: var(--noir-900);
+  --color-dark-surface: var(--noir-800);
+  --color-dark-line: rgba(197, 160, 89, .26);   /* filet or translucide */
+  --color-dark-text: var(--ivoire-100);
+  --color-dark-muted: var(--sable-300);         /* 9.8:1 sur noir-900 */
+  --color-dark-accent: var(--or-300);
+
+  --color-focus: var(--or-800);                 /* anneau focus sur clair (5.4:1) */
+  --color-focus-dark: var(--or-300);            /* sur noir (11.6:1) */
+
+  /* Overlays photo : le texte posé sur photo = TOUJOURS ivoire, jamais or.
+     Pire cas (photo blanche) : opacité effective >= .62 sous le texte => ivoire >= 5:1. */
+  --overlay-hero: linear-gradient(180deg, rgba(10,9,8,.55) 0%, rgba(10,9,8,.28) 30%, rgba(10,9,8,.66) 62%, rgba(10,9,8,.88) 100%);
+  --overlay-hero-mobile: linear-gradient(180deg, rgba(10,9,8,.5) 0%, rgba(10,9,8,.35) 25%, rgba(10,9,8,.72) 58%, rgba(10,9,8,.92) 100%);
+  --overlay-card: linear-gradient(180deg, rgba(10,9,8,0) 30%, rgba(10,9,8,.7) 62%, rgba(10,9,8,.9) 100%);
+  --overlay-tint: rgba(10, 9, 8, .22);
+  --overlay-vignette: radial-gradient(120% 90% at 50% 45%, rgba(10,9,8,0) 55%, rgba(10,9,8,.55) 100%);
+  --overlay-vignette-md: radial-gradient(120% 90% at 50% 45%, rgba(10,9,8,0) 58%, rgba(10,9,8,.5) 100%);
+  --overlay-hero-md: linear-gradient(180deg, rgba(10,9,8,.52) 0%, rgba(10,9,8,.32) 28%, rgba(10,9,8,.52) 62%, rgba(10,9,8,.86) 100%);
+
+  /* ---------- Typographie ---------- */
+  /* Bodoni Moda = la police déjà utilisée par le site actuel du client, serif à fort contraste
+     proche du monogramme. Manrope = son compagnon actuel (lisible, géométrique). */
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", "Times New Roman", serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Échelle fluide (360 -> 1440). Bodoni : ne jamais descendre sous 20px (traits fins). */
+  --fs-label: .75rem;                                    /* 12px, capitales tracking */
+  --fs-small: .875rem;                                   /* 14px */
+  --fs-body: clamp(1rem, .96rem + .2vw, 1.0625rem);      /* 16 -> 17 */
+  --fs-lead: clamp(1.125rem, 1.05rem + .4vw, 1.3125rem); /* 18 -> 21 */
+  --fs-h4: clamp(1.25rem, 1.15rem + .5vw, 1.5rem);       /* 20 -> 24 */
+  --fs-h3: clamp(1.625rem, 1.4rem + 1.1vw, 2.25rem);     /* 26 -> 36 */
+  --fs-h2: clamp(2rem, 1.5rem + 2.4vw, 3.5rem);          /* 32 -> 56 */
+  --fs-h1: clamp(2.5rem, 1.7rem + 4vw, 5.25rem);         /* 40 -> 84 */
+  --fs-display: clamp(2.75rem, 1.6rem + 6vw, 7.5rem);    /* 44 -> 120, titre hero */
+  --fs-numeral: clamp(3rem, 2rem + 5vw, 6rem);           /* chiffres romains/numéros d'étapes */
+
+  --lh-tight: 1.04;
+  --lh-heading: 1.12;
+  --lh-body: 1.65;
+  --ls-display: -.015em;
+  --ls-label: .22em;
+  --ls-button: .16em;
+  --ls-wordmark: .34em;   /* "PARIS" comme dans le logo */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  /* ---------- Espacements (base 4px, rythme 8) ---------- */
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-y: clamp(4.5rem, 3rem + 7vw, 9rem);
+
+  /* ---------- Grille ---------- */
+  --container-max: 1320px;
+  --container-narrow: 760px;
+  --gutter: clamp(1.25rem, .8rem + 2.2vw, 2.5rem);
+  --grid-cols: 4;
+  --grid-gap: 1rem;
+
+  /* ---------- Formes, traits ---------- */
+  --radius-0: 0;
+  --radius-1: 0;        /* v2 : angles droits (colonnade), plus de 2px */
+  --radius-pill: 999px; /* badges uniquement */
+  --line-w: 1px;
+
+  /* ---------- Ombres : rares ; sur noir on utilise une lueur dorée ---------- */
+  --shadow-1: 0 1px 2px rgba(12,11,10,.08);
+  --shadow-2: 0 14px 34px -14px rgba(12,11,10,.28);
+  --shadow-3: 0 34px 70px -26px rgba(12,11,10,.45);
+  --glow-gold: 0 0 0 1px rgba(197,160,89,.5), 0 10px 40px -10px rgba(197,160,89,.35);
+
+  /* ---------- Ratios photo ---------- */
+  --ratio-hero: 16 / 9;
+  --ratio-hero-mobile: 4 / 5;
+  --ratio-card: 4 / 5;
+  --ratio-wide: 21 / 9;
+  --ratio-square: 1 / 1;
+  --ratio-portrait: 2 / 3;
+  --ratio-fleet: 16 / 10;
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 360ms;
+  --dur-slow: 700ms;
+  --dur-reveal: 1000ms;
+  --dur-splash: 2400ms;      /* durée totale du splash couronne */
+  --reveal-distance: 28px;
+  --parallax-range: 6%;
+  --stagger: 90ms;
+
+  /* ---------- Z-index ---------- */
+  --z-header: 50;
+  --z-drawer: 60;
+  --z-sticky-cta: 40;
+  --z-progress: 45;
+  --z-modal: 80;
+  --z-splash: 100;
+
+  /* ---------- Header ---------- */
+  --header-h: 72px;
+
+  /* ---------- Couronne (masque CSS monochrome, approximation à remplacer par la couronne vectorisée du logo) ---------- */
+  --crown-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 55'%3E%3Cpath d='M0 20.7L18.1 28A11.3 11.3 0 1 0 35 20.4L49.6 0L65 20.4A11.3 11.3 0 1 0 81.9 28L100 20.7L79.6 55Q50 50.5 20.7 54.4Z'/%3E%3C/svg%3E");
+}
+
+@media (min-width: 640px) {
+  :root { --grid-cols: 8; --grid-gap: 1.25rem; }
+}
+@media (min-width: 1024px) {
+  :root { --grid-cols: 12; --grid-gap: 1.5rem; --header-h: 88px; }
+}
+
+/* ---------- Contexte sombre (toutes tailles) ---------- */
+.theme-dark {
+  --color-bg: var(--color-dark-bg);
+  --color-bg-alt: var(--color-dark-surface);
+  --color-surface: var(--color-dark-surface);
+  --color-surface-sunk: var(--noir-700);
+  --color-text: var(--color-dark-text);
+  --color-text-muted: var(--color-dark-muted);
+  --color-line: var(--color-dark-line);
+  --color-line-strong: var(--or-500);
+  --color-accent: var(--color-dark-accent);
+  --color-accent-hover: #F3DFAF;
+  --color-on-accent: var(--noir-900);
+  --color-ornament: var(--or-500);
+  --color-field-bg: var(--noir-800);
+  --color-field-border: var(--sable-400);
+  --color-field-border-focus: var(--or-300);
+  --color-danger: var(--danger-on-dark);
+  --color-focus: var(--color-focus-dark);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ---------- Sombre à partir de 768px seulement : CLAIR sur mobile (retour client KST : noir trop sombre sur mobile) ---------- */
+@media (min-width: 768px) {
+  .theme-dark-md {
+    --color-bg: var(--color-dark-bg);
+    --color-bg-alt: var(--color-dark-surface);
+    --color-surface: var(--color-dark-surface);
+    --color-surface-sunk: var(--noir-700);
+    --color-text: var(--color-dark-text);
+    --color-text-muted: var(--color-dark-muted);
+    --color-line: var(--color-dark-line);
+    --color-line-strong: var(--or-500);
+    --color-accent: var(--color-dark-accent);
+    --color-accent-hover: #F3DFAF;
+    --color-on-accent: var(--noir-900);
+    --color-ornament: var(--or-500);
+    --color-field-bg: var(--noir-800);
+    --color-field-border: var(--sable-400);
+    --color-field-border-focus: var(--or-300);
+    --color-danger: var(--danger-on-dark);
+    --color-focus: var(--color-focus-dark);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+}
+
+/* ---------- Utilitaires de base liés aux tokens (pas de mise en page de page) ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+.label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Couronne ornementale : <span class="crown" aria-hidden="true"></span>, taille via font-size (1em de large x .56em) */
+.crown {
+  display: inline-block;
+  width: 1em;
+  height: .55em;
+  background: var(--color-ornament);
+  -webkit-mask: var(--crown-mask) center / contain no-repeat;
+  mask: var(--crown-mask) center / contain no-repeat;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* ---------- Reveal (classe posée en JS via IntersectionObserver : .is-in) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Sans JS : contenu visible */
+.no-js .reveal { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-base: 1ms; --dur-slow: 1ms; --dur-reveal: 1ms; --dur-splash: 1ms; --reveal-distance: 0px; --parallax-range: 0%; }
+  .reveal { opacity: 1; transform: none; }
+  * { scroll-behavior: auto !important; animation-duration: 1ms !important; }
+}
